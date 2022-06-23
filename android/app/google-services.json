@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "800489451485",
+    "project_id": "sushimemosns",
+    "storage_bucket": "sushimemosns.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:800489451485:android:849b25061d0eb7aa4c1034",
+        "android_client_info": {
+          "package_name": "com.example.sushi_memo_sns"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "800489451485-n7rbd3al3294ibncomf77ortuisd6plg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDwG-AREsp2z1801Q5L-X-sdi5UUvDoYYU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "800489451485-n7rbd3al3294ibncomf77ortuisd6plg.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "800489451485-s0dl58j77hjn136baa2ni2373bm1qdnn.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.sushiMemoSns"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
