@@ -7,8 +7,23 @@ class Roulette extends StatelessWidget{
       appBar: AppBar(
         title: Text("ランダム選択"),
       ),
-      body: Center(child: Text("寿司ルーレット")
+      body: Center(
+        child: ElevatedButton(
+            onPressed: (){
+              Navigator.push(context,MaterialPageRoute(
+                  builder:(context) => ChosenStore()
+              ));
+            },
+            child: Text('お店選択')
+        ),
       ),
     );
+  }
+}
+
+class ChosenStore extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
