@@ -24,6 +24,33 @@ class Roulette extends StatelessWidget{
 class ChosenStore extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('お店選択'),
+      ),
+      body: Center(
+        child: Column(
+
+          children: [
+            ElevatedButton(
+                onPressed: (){},
+                child: Text('スシロー')
+            ),
+            ElevatedButton(
+                onPressed: (){},
+                child: Text('くら寿司')
+            ),
+            ElevatedButton(
+                onPressed: (){},
+                child: Text('はま寿司')
+            ),
+            ElevatedButton(
+                onPressed: (){},
+                child: Text('かっぱ寿司')
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
