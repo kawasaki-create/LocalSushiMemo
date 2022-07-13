@@ -30,23 +30,38 @@ class ChosenStore extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-
-          children: [
-            ElevatedButton(
-                onPressed: (){},
-                child: Text('スシロー')
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: (){},
+                    child: Text('スシロー')
+                ),
+                ElevatedButton(
+                    onPressed: (){},
+                    child: Text('くら寿司')
+                ),
+              ],
             ),
-            ElevatedButton(
-                onPressed: (){},
-                child: Text('くら寿司')
+            Row(
+              children: [
+                Text('\n\n'),
+              ],
             ),
-            ElevatedButton(
-                onPressed: (){},
-                child: Text('はま寿司')
-            ),
-            ElevatedButton(
-                onPressed: (){},
-                child: Text('かっぱ寿司')
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ElevatedButton(
+                    onPressed: (){},
+                    child: Text('はま寿司')
+                ),
+                ElevatedButton(
+                    onPressed: (){},
+                    child: Text('かっぱ寿司')
+                ),
+              ],
             ),
           ],
         ),
