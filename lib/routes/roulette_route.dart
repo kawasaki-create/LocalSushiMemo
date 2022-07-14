@@ -1,32 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Roulette extends StatelessWidget{
+class Roulette extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("ランダム選択"),
-      ),
-      body: Center(
-        child: ElevatedButton(
-            onPressed: (){
-              Navigator.push(context,MaterialPageRoute(
-                  builder:(context) => ChosenStore()
-              ));
-            },
-            child: Text('お店選択')
-        ),
-      ),
-    );
-  }
+  _RouletteState createState() => _RouletteState();
 }
 
-class ChosenStore extends StatelessWidget {
+class _RouletteState extends State<Roulette> {
+  String appBarText = 'お店選択';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('お店選択'),
+        title: Text(appBarText),
       ),
       body: Center(
         child: Column(
@@ -36,11 +22,19 @@ class ChosenStore extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () async{
+                      setState(() {
+                        appBarText = 'お店：スシロー';
+                      });
+                    },
                     child: Text('スシロー')
                 ),
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () async{
+                      setState(() {
+                        appBarText = 'お店：くら寿司';
+                      });
+                    },
                     child: Text('くら寿司')
                 ),
               ],
@@ -54,11 +48,19 @@ class ChosenStore extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () async{
+                      setState(() {
+                        appBarText = 'お店：はま寿司';
+                      });
+                    },
                     child: Text('はま寿司')
                 ),
                 ElevatedButton(
-                    onPressed: (){},
+                    onPressed: () async{
+                      setState(() {
+                        appBarText = 'お店：かっぱ寿司';
+                      });
+                    },
                     child: Text('かっぱ寿司')
                 ),
               ],
