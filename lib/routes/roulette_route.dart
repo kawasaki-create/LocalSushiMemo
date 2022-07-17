@@ -7,6 +7,23 @@ class Roulette extends StatefulWidget {
 
 class _RouletteState extends State<Roulette> {
   String appBarText = 'お店選択';
+  int sushiKubun = 0;
+
+  joken(){
+  switch(sushiKubun){
+    case 0:
+     return  appBarText = '条件が正しくありません';
+    case 1:
+      return appBarText = 'お店：スシロー';
+    case 2:
+      return appBarText = 'お店：くら寿司';
+    case 3:
+      return appBarText = 'お店：はま寿司';
+    case 4:
+      return appBarText = 'お店：かっぱ寿司';
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +41,10 @@ class _RouletteState extends State<Roulette> {
                 ElevatedButton(
                     onPressed: () async{
                       setState(() {
-                        appBarText = 'お店：スシロー';
+                        sushiKubun = 1;
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => AllorOnly(sushiKubun)
+                        ));
                       });
                     },
                     child: Text('スシロー')
@@ -32,7 +52,10 @@ class _RouletteState extends State<Roulette> {
                 ElevatedButton(
                     onPressed: () async{
                       setState(() {
-                        appBarText = 'お店：くら寿司';
+                        sushiKubun = 2;
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => AllorOnly(sushiKubun)
+                        ));
                       });
                     },
                     child: Text('くら寿司')
@@ -50,7 +73,10 @@ class _RouletteState extends State<Roulette> {
                 ElevatedButton(
                     onPressed: () async{
                       setState(() {
-                        appBarText = 'お店：はま寿司';
+                        sushiKubun = 3;
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => AllorOnly(sushiKubun)
+                        ));
                       });
                     },
                     child: Text('はま寿司')
@@ -58,12 +84,68 @@ class _RouletteState extends State<Roulette> {
                 ElevatedButton(
                     onPressed: () async{
                       setState(() {
-                        appBarText = 'お店：かっぱ寿司';
+                        sushiKubun = 4;
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => AllorOnly(sushiKubun)
+                        ));
                       });
                     },
                     child: Text('かっぱ寿司')
                 ),
               ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AllorOnly extends StatelessWidget {
+  get joken => _RouletteState().joken();
+
+  AllorOnly(this.sushiKubun);
+   int sushiKubun;
+
+   String appBarText = 'お店選択';
+
+  @override
+  Widget build(BuildContext context) {
+    switch(sushiKubun){
+      case 0:
+          appBarText = '条件が正しくありません';
+          break;
+      case 1:
+         appBarText = 'お店：スシロー';
+         break;
+      case 2:
+         appBarText = 'お店：くら寿司';
+         break;
+      case 3:
+         appBarText = 'お店：はま寿司';
+         break;
+      case 4:
+         appBarText = 'お店：かっぱ寿司';
+         break;
+    }
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(appBarText),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            ElevatedButton(
+                onPressed: (){
+
+                },
+                child: Text('寿司オンリー'),
+            ),
+            Text('\n'),
+            ElevatedButton(
+              onPressed: (){},
+              child: Text('全メニュー'),
             ),
           ],
         ),
