@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_memo_sns/scrapingMenu.dart';
 
 class Roulette extends StatefulWidget {
   @override
@@ -8,21 +9,6 @@ class Roulette extends StatefulWidget {
 class _RouletteState extends State<Roulette> {
   String appBarText = 'お店選択';
   int sushiKubun = 0;
-
-  joken(){
-  switch(sushiKubun){
-    case 0:
-     return  appBarText = '条件が正しくありません';
-    case 1:
-      return appBarText = 'お店：スシロー';
-    case 2:
-      return appBarText = 'お店：くら寿司';
-    case 3:
-      return appBarText = 'お店：はま寿司';
-    case 4:
-      return appBarText = 'お店：かっぱ寿司';
-    }
-  }
 
 
   @override
@@ -102,7 +88,6 @@ class _RouletteState extends State<Roulette> {
 }
 
 class AllorOnly extends StatelessWidget {
-  get joken => _RouletteState().joken();
 
   AllorOnly(this.sushiKubun);
    int sushiKubun;
@@ -128,6 +113,7 @@ class AllorOnly extends StatelessWidget {
          appBarText = 'お店：かっぱ寿司';
          break;
     }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarText),
@@ -138,7 +124,9 @@ class AllorOnly extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
                 onPressed: (){
-
+                  Navigator.push(context,MaterialPageRoute(
+                      builder:(context) => scraping()
+                  ));
                 },
                 child: Text('寿司オンリー'),
             ),
