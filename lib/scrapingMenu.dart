@@ -8,9 +8,10 @@ class scraping extends StatefulWidget {
 }
 
 class _scrapingState extends State<scraping> {
-  dynamic sushiroMenuName = '';
-  dynamic  sushiroMenuPrice = '';
-  dynamic  sushiroMenuPic = '';
+  List sushiroMenuName = [];
+  List  sushiroMenuPrice = [];
+
+  String sushiroMenuPicStr = '';
 
     sushiroSC() async {
     final controller = WindowController();
@@ -22,8 +23,8 @@ class _scrapingState extends State<scraping> {
            .querySelectorAll(".ttl");
        sushiroMenuPrice = controller.window!.document
            .querySelectorAll(".price");
-       sushiroMenuPic = controller.window!.document
-           .querySelectorAll(".item-list  img");
+       sushiroMenuPicStr = controller.window!.document
+           .querySelectorAll(".item-list  img").toString();
     });
   }
 
@@ -39,7 +40,7 @@ class _scrapingState extends State<scraping> {
       body: Center(
         child: SingleChildScrollView(
           child: Column(
-            children: [
+            children: <Widget>[
               ElevatedButton(
                 onPressed: (){
                   sushiroSC();
@@ -49,15 +50,31 @@ class _scrapingState extends State<scraping> {
               ),
              // Text(sushiroMenuName.replaceAll('<span class="ttl">', '').replaceAll('</span>', '')),
              // Text(sushiroMenuPrice.replaceAll('<span class="price">', '').replaceAll('</span>', '')),
-             sushiroMenuPic = sushiroMenuPic.replaceAll('<img src=', '').replaceAll('width="200" height="200" alt="">', '')
+            /* sushiroMenuPic = sushiroMenuPic.replaceAll('<img src=', '').replaceAll('width="200" height="200" alt="">', '')
                   .replaceAll('[', '')
                   .replaceAll(']', ''),
-              // Text(sushiroMenuPic),
-              ListView.builder(
-                  itemBuilder: (BuildContext context, int index){
-                    return sushiroMenuPic;
-                  }
-              )
+
+             */
+               ElevatedButton(
+                   onPressed: (){
+                     Navigator.push(context,MaterialPageRoute(
+                         builder:(context) => ListBody(sushiroMenuPicStr)
+                     ));
+                    /*
+
+                     */
+                   },
+                   child: Text('リストが開きます')
+               ),
+              ElevatedButton(
+                onPressed: (){
+                  Text(sushiroMenuPicStr);
+                },
+                child: Text(''),
+              ),
+
+
+
             ],
           ),
         ),
@@ -65,4 +82,39 @@ class _scrapingState extends State<scraping> {
     );
     }
   }
+  class ListBody extends StatelessWidget {
+  List listText = ['りんご','ばなな','みかん','さーもん'];
+  List  sushiroMenuPic = [];
+
+  ListBody(this.sushiroMenuPicStr);
+  late String sushiroMenuPicStr = sushiroMenuPicStr.replaceAll('<img src=', '').replaceAll('width="200" height="200" alt="">', '');
+
+    @override
+    Widget build(BuildContext context) {
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('yobidasisaki'),
+        ),
+        body: Column(
+          children: [
+            Card(
+              child: ListView.builder(
+                  itemCount: sushiroMenuPicStr.length,
+                  itemBuilder: (context, index){
+                    sushiroMenuPic = sushiroMenuPicStr as List;
+                    final item = sushiroMenuPic[index];
+                    return ;
+                  }
+              ),
+            ),
+            Text(sushiroMenuPicStr)
+          ],
+        ),
+         
+
+
+      );
+    }
+  }
+
 
