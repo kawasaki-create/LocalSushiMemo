@@ -103,7 +103,9 @@ class _scrapingState extends State<scraping> {
                   itemBuilder: (context, index){
                     sushiroMenuPic = sushiroMenuPicStr as List;
                     final item = sushiroMenuPic[index];
-                    return ;
+                    return Text(item);
+
+
                   }
               ),
             ),
