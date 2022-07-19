@@ -124,15 +124,17 @@ class AllorOnly extends StatelessWidget {
           children: <Widget>[
             ElevatedButton(
                 onPressed: (){
-                  Navigator.push(context,MaterialPageRoute(
-                      builder:(context) => scraping()
-                  ));
+
                 },
                 child: Text('寿司オンリー'),
             ),
             Text('\n'),
             ElevatedButton(
-              onPressed: (){},
+              onPressed: () async{
+                Navigator.push(context,MaterialPageRoute(
+                    builder:(context) => ListBox(appBarText)
+                ));
+              },
               child: Text('全メニュー'),
             ),
           ],
