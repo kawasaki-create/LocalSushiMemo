@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:universal_html/controller.dart';
 import 'package:sushi_memo_sns/routes/roulette_route.dart';
 import 'dart:math';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sushi_memo_sns/twitterShere.dart';
 
 class scraping extends StatefulWidget {
 
@@ -172,16 +172,7 @@ class _scrapingState extends State<scraping> {
                 SizedBox(
                   width: double.infinity,
 
-                  child: ElevatedButton(
-                    onPressed: (){
-
-                    },
-
-                    child: Text('Tweetする'),
-                    style: ElevatedButton.styleFrom(
-                        primary: Colors.lightBlue
-                    ),
-                  ),
+                  child: TwitterShareWidget(key: )
                 ),
 
               ],
