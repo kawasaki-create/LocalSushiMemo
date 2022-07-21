@@ -132,7 +132,7 @@ class AllorOnly extends StatelessWidget {
             ElevatedButton(
               onPressed: () async{
                 Navigator.push(context,MaterialPageRoute(
-                    builder:(context) => ListBox(appBarText)
+                    builder:(context) => ListBox(sushiKubun.toString(), appBarText)
                 ));
               },
               child: Text('全メニュー'),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class TwitterShareWidget extends StatelessWidget {
   final String text;
@@ -10,8 +11,8 @@ class TwitterShareWidget extends StatelessWidget {
   final String related;
 
   const TwitterShareWidget(
-      { Key key,
-        @required this.text,
+      { required Key key,
+        required this.text,
         this.url = "",
         this.hashtags = const [],
         this.via = "",
@@ -41,7 +42,7 @@ class TwitterShareWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: Text(''),
+      child: Text('ツイートする'),
       onPressed: () {
         tweetContents();
       },
