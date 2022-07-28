@@ -444,6 +444,8 @@ PODS:
   - PromisesObjC (2.1.0)
   - twitter_login (0.0.1):
     - Flutter
+  - url_launcher_ios (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -451,6 +453,7 @@ DEPENDENCIES:
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
   - Flutter (from `Flutter`)
   - twitter_login (from `.symlinks/plugins/twitter_login/ios`)
+  - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
 
 SPEC REPOS:
   trunk:
@@ -481,6 +484,8 @@ EXTERNAL SOURCES:
     :path: Flutter
   twitter_login:
     :path: ".symlinks/plugins/twitter_login/ios"
+  url_launcher_ios:
+    :path: ".symlinks/plugins/url_launcher_ios/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -503,6 +508,7 @@ SPEC CHECKSUMS:
   nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
   PromisesObjC: 99b6f43f9e1044bd87a95a60beff28c2c44ddb72
   twitter_login: 2794db69b7640681171b17b3c2c84ad9dfb4a57f
+  url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de
 
 PODFILE CHECKSUM: 1ec2c7c87bac9f103afe57ad955d950f5182572c
 
