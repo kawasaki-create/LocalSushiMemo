@@ -99,33 +99,29 @@ class _scrapingState extends State<scraping> {
     _ListBoxState(this.appBarText, this.sushiKubun);
     String appBarText;
     String sushiKubun;
-    late int RandomArg = Random().nextInt(sushiroMenuName.length);
 
     List ateList = [];
-
     List sushiroMenuName = [];
     List  sushiroMenuPrice = [];
-    List<String> sushiroMenuName2 = [];
+    List sushiroMenuName2 = [];
     List sushiroMenuPrice2 = [];
+    late int RandomArg = Random().nextInt(sushiroMenuName2.length);
+    String changeString = 'デフォルト文字';
 
    chooseStore() async {
      final controller = WindowController();
      await controller.openHttp(
        uri: Uri.parse('https://www.akindo-sushiro.co.jp/menu/'),
      );
-     setState(() {
-       sushiroMenuName2 = controller.window!.document
-           .querySelectorAll(".ttl")
-            .toString() as List<String>;
+       final sushiroMenuName2 = controller.window!.document
+           .querySelectorAll(".ttl").toList();
        sushiroMenuPrice = controller.window!.document
            .querySelectorAll(".price");
-     });
    }
 
 
     @override
     Widget build(BuildContext context) {
-     chooseStore();
       return Scaffold(
         appBar: AppBar(
           title: Text(appBarText),
@@ -135,18 +131,29 @@ class _scrapingState extends State<scraping> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                ElevatedButton(
-                  onPressed: (){
-                    setState(() {
-
-                    });
-                  },
-                  child: Text(''),
-                ),
                 Text('あなたが次に食べるのは・・・\n\n'),
-                Text(sushiroMenuName2[2]),
-                Text(sushiroMenuPrice[RandomArg] + '\n\n'),
-                Row(
+               ElevatedButton(
+                 onPressed: (){
+                   final controller = WindowController();
+                    controller.openHttp(
+                     uri: Uri.parse('https://www.akindo-sushiro.co.jp/menu/'),
+                   );
+                   final sushiroMenuName3 = controller.window!.document
+                       .querySelectorAll(".ttl");
+                   sushiroMenuPrice = controller.window!.document
+                       .querySelectorAll(".price");
+                   sushiroMenuName3.forEach((element) async {
+                     final title = element.innerHtml;
+                     setState(() async {
+                       changeString = title!;
+                     });
+                   });
+                 },
+                 child: Text('ooo'),
+               ),
+             Text(changeString),
+             //  Text(sushiroMenuPrice[2] + '\n\n'),
+                /*   Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
@@ -169,6 +176,8 @@ class _scrapingState extends State<scraping> {
 
                   ],
                 ),
+
+             */
                 Text('\n\n\n'),
                 Text('※メニューは2022年7月22日時点のものです。'),
 
