@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sushi_memo_sns/root.dart';
 import 'package:universal_html/controller.dart';
 import 'package:sushi_memo_sns/routes/roulette_route.dart';
 import 'dart:math';
 import 'package:sushi_memo_sns/twitterShere.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:sushi_memo_sns/post_page.dart';
 
 class scraping extends StatefulWidget {
 
@@ -96,35 +101,33 @@ class _scrapingState extends State<scraping> {
   }
 
   class _ListBoxState extends State<ListBox> {
+
     _ListBoxState(this.appBarText, this.sushiKubun);
     String appBarText;
     String sushiKubun;
-
-    List ateList = [];
     List sushiroMenuName = [];
-    List  sushiroMenuPrice = [];
-    List sushiroMenuName2 = [];
-    List sushiroMenuPrice2 = [];
-    late int RandomArg = Random().nextInt(sushiroMenuName2.length);
-    String changeString = 'デフォルト文字';
+    List sushiroMenuPrice = [];
+    List ateList = [];
+   late int RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
 
-   chooseStore() async {
-     final controller = WindowController();
-     await controller.openHttp(
-       uri: Uri.parse('https://www.akindo-sushiro.co.jp/menu/'),
-     );
-       final sushiroMenuName2 = controller.window!.document
-           .querySelectorAll(".ttl").toList();
-       sushiroMenuPrice = controller.window!.document
-           .querySelectorAll(".price");
-   }
+    sushiroSC() async {
+      var url = 'https://www.akindo-sushiro.co.jp/menu/';
+      final controller = WindowController();
+      await controller.openHttp(uri: Uri.parse(url));
 
+      setState(() {
+        sushiroMenuName = controller.window!.document.querySelectorAll('span > .ttl');
+        sushiroMenuPrice = controller.window!.document.querySelectorAll('span > .price');
+      });
+
+    }
 
     @override
     Widget build(BuildContext context) {
+      sushiroSC();
       return Scaffold(
         appBar: AppBar(
-          title: Text(appBarText),
+          title: Text('お店：' + appBarText),
         ),
         body: Center(
           child: SingleChildScrollView(
@@ -132,35 +135,21 @@ class _scrapingState extends State<scraping> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text('あなたが次に食べるのは・・・\n\n'),
-               ElevatedButton(
-                 onPressed: (){
-                   final controller = WindowController();
-                    controller.openHttp(
-                     uri: Uri.parse('https://www.akindo-sushiro.co.jp/menu/'),
-                   );
-                   final sushiroMenuName3 = controller.window!.document
-                       .querySelectorAll(".ttl");
-                   sushiroMenuPrice = controller.window!.document
-                       .querySelectorAll(".price");
-                   sushiroMenuName3.forEach((element) async {
-                     final title = element.innerHtml;
-                     setState(() async {
-                       changeString = title!;
-                     });
-                   });
-                 },
-                 child: Text('ooo'),
-               ),
-             Text(changeString),
-             //  Text(sushiroMenuPrice[2] + '\n\n'),
-                /*   Row(
+                  Text(sushiroMenuName[RandomSushiroMenu].toString()
+                      .replaceAll('<span class="ttl">', '').replaceAll('</span>', '')),
+                  Text(sushiroMenuPrice[RandomSushiroMenu].toString()
+                      .replaceAll('<span class="price">', '').replaceAll('</span>', '')),
+                  Text('\n\n'),
+
+                Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     ElevatedButton(
                         onPressed: (){
-                          ateList.add(sushiroMenuName2[RandomArg]);
+                          ateList.add(sushiroMenuName[RandomSushiroMenu].toString()
+                              .replaceAll('<span class="ttl">', '').replaceAll('</span>', ''));
                           setState(() {
-                            RandomArg =  Random().nextInt(sushiroMenuName2.length);
+                            RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
                           });
                         },
                         child: Text('食べた')
@@ -168,7 +157,7 @@ class _scrapingState extends State<scraping> {
                     ElevatedButton(
                         onPressed: (){
                           setState(() {
-                            RandomArg =  Random().nextInt(sushiroMenuName2.length);
+                            RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
                           });
                         },
                         child: Text('食べてない')
@@ -176,11 +165,7 @@ class _scrapingState extends State<scraping> {
 
                   ],
                 ),
-
-             */
                 Text('\n\n\n'),
-                Text('※メニューは2022年7月22日時点のものです。'),
-
                 Container(
                   alignment: Alignment.center,
                   width: double.infinity,
@@ -192,15 +177,31 @@ class _scrapingState extends State<scraping> {
                       )),
                 ),
                 for(int i = 0; i < ateList.length; i ++)
-
                   Text(ateList[i]),
                 Text('\n\n\n'),
                 SizedBox(
                    width: double.infinity,
 
                    child: ElevatedButton(
-                      onPressed: (){
+                      onPressed: () async{
+                        final date =
+                        DateTime.now().toLocal().toIso8601String(); // 現在の日時
+                      final user =  await FirebaseAuth.instance
+                        .currentUser;
+                      final email = user?.email;
 
+
+                         await FirebaseFirestore.instance
+                          .collection('eats')
+                          .doc()
+                          .set({
+                            'date' : date,
+                            'ate' :  ateList.toString(),
+                            'email' : email
+                          });
+                        setState(() {
+                          ateList = [];
+                        });
                       },
                       child: Text('会計'),
                      style: ElevatedButton.styleFrom(
@@ -210,10 +211,13 @@ class _scrapingState extends State<scraping> {
                 ),
                 SizedBox(
                   width: double.infinity,
-
-                  child: TwitterShareWidget(text: 'ここにテキストを入力してください', key: UniqueKey(),)
+                  child: TwitterShareWidget(
+                    text: '今回' + appBarText + 'で食べたのは\n\n' + ateList.toString()
+                          .replaceAll('[', '').replaceAll(']', '') + '\n\nです\n\n#すしめも\n'
+                        '@kwsk_create より',
+                    key: UniqueKey(),
+                  )
                 ),
-                Text(sushiKubun)
               ],
             ),
           ),

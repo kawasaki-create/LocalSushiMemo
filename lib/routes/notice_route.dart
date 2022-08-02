@@ -9,7 +9,7 @@ class Notice extends StatelessWidget{
       appBar: AppBar(
         title: Text("通知"),
       ),
-      body: Center(child: Text("通知画面")
+      body: Center(child: Text("Coming Soon")
       ),
     );
   }

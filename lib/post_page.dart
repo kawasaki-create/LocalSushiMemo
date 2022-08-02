@@ -24,7 +24,7 @@ class _AddPostPageState extends State<AddPostPage>{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('チャット投稿'),
+        title: Text('つぶやき'),
       ),
       body: Center(
         child: Container(

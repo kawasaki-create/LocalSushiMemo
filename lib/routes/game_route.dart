@@ -5,9 +5,9 @@ class Game extends StatelessWidget{
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("SushiGame"),
+        title: Text("ランキング"),
       ),
-      body: Center(child: Text("ゲーム")
+      body: Center(child: Text("ランキング")
       ),
     );
   }

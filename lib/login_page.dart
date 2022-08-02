@@ -117,7 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                     password = 'testpass';
                   });
                 },
-                child: Text(''),
+                child: Text('テスト用'),
               )
             ],
           ),

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_memo_sns/root.dart';
 import 'package:sushi_memo_sns/scrapingMenu.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class Roulette extends StatefulWidget {
+  get user => RootWidget(user);
   @override
   _RouletteState createState() => _RouletteState();
 }
@@ -10,6 +14,7 @@ class _RouletteState extends State<Roulette> {
   String appBarText = 'お店選択';
   int sushiKubun = 0;
 
+late final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -101,22 +106,22 @@ class AllorOnly extends StatelessWidget {
           appBarText = '条件が正しくありません';
           break;
       case 1:
-         appBarText = 'お店：スシロー';
+         appBarText = 'スシロー';
          break;
       case 2:
-         appBarText = 'お店：くら寿司';
+         appBarText = 'くら寿司';
          break;
       case 3:
-         appBarText = 'お店：はま寿司';
+         appBarText = 'はま寿司';
          break;
       case 4:
-         appBarText = 'お店：かっぱ寿司';
+         appBarText = 'かっぱ寿司';
          break;
     }
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(appBarText),
+        title: Text('お店：' + appBarText),
       ),
       body: Center(
         child: Column(

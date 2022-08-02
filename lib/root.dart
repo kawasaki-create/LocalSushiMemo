@@ -24,21 +24,21 @@ class _RootWidget extends State<RootWidget> {
   // 引数からユーザー情報を受け取る
   _RootWidget(this.user);
   // ユーザー情報
-  final User user;
+   final  User user;
 
   //アイコン情報
   static const _RootWidgetIcons = [
     Icons.home,
     Icons.notifications_active,
     Icons.smart_toy,
-    Icons.sports_esports,
+    Icons.outlined_flag,
   ];
     //アイコン文字列
   static const _RootWidgetItemNames = [
     'ホーム',
     '通知',
     'ランダム',
-    'ゲーム',
+    'ランキング',
   ];
 
   var _routes = [
@@ -47,7 +47,6 @@ class _RootWidget extends State<RootWidget> {
     Roulette(),
     Game(),
   ];
-
   @override
   void initState() {
     super.initState();
