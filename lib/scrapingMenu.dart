@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sushi_memo_sns/result.dart';
 import 'package:sushi_memo_sns/root.dart';
 import 'package:universal_html/controller.dart';
 import 'package:sushi_memo_sns/routes/roulette_route.dart';
@@ -199,9 +200,14 @@ class _scrapingState extends State<scraping> {
                             'ate' :  ateList.toString(),
                             'email' : email
                           });
-                        setState(() {
+                       /* setState(() {
                           ateList = [];
                         });
+
+                        */
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => casherResult(ateList)
+                        ));
                       },
                       child: Text('会計'),
                      style: ElevatedButton.styleFrom(
