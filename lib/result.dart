@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_memo_sns/routes/roulette_route.dart';
 class casherResult extends StatefulWidget {
   casherResult(this.ateList);
   List ateList;
@@ -31,9 +32,41 @@ class _casherResultState extends State<casherResult> {
             Container(
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.red),
-
               ),
-              child: Text(ateList.toString()),
+              child: Text(ateList.length.toString() + '  皿',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Text('\n\n'),
+            Container(
+              alignment: Alignment.center,
+              width: double.infinity,
+              color: Colors.amberAccent,
+              child: Text('今回の獲得ポイント'),
+            ),
+            Text('\n今回は\n\n'),
+            Container(
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+              ),
+              child: Text('${ateList.length * 2}  ポイント',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Text('\n\n付与しました\n\n'),
+            ElevatedButton(
+              child: Text('ログインページへ移動'),
+              onPressed: (){
+                Navigator.push(context,MaterialPageRoute(
+                    builder:(context) => Roulette()
+                ));
+              },
             ),
           ],
         ),

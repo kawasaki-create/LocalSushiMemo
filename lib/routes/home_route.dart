@@ -157,9 +157,6 @@ class _Home extends State<Home> {
                               primary: Colors.orange,
                             ),
                           ),
-                          Container(
-                            child: Text('${document['text']}'),
-                          ),
                         ],
                       ),
                     );

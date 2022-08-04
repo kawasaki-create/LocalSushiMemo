@@ -187,10 +187,9 @@ class _scrapingState extends State<scraping> {
                       onPressed: () async{
                         final date =
                         DateTime.now().toLocal().toIso8601String(); // 現在の日時
-                      final user =  await FirebaseAuth.instance
-                        .currentUser;
-                      final email = user?.email;
-
+                        final user =  await FirebaseAuth.instance
+                          .currentUser;
+                        final email = user?.email;
 
                          await FirebaseFirestore.instance
                           .collection('eats')
@@ -200,6 +199,12 @@ class _scrapingState extends State<scraping> {
                             'ate' :  ateList.toString(),
                             'email' : email
                           });
+                         await FirebaseFirestore.instance
+                        .collection('Points')
+                         .doc(email)
+                         .set({
+                           'totalPoint': '3'
+                         });
                        /* setState(() {
                           ateList = [];
                         });

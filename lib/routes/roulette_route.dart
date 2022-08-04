@@ -18,6 +18,21 @@ late final User user;
 
   @override
   Widget build(BuildContext context) {
+    switch(sushiKubun){
+      case 1:
+        appBarText = 'スシロー';
+        break;
+      case 2:
+        appBarText = 'くら寿司';
+        break;
+      case 3:
+        appBarText = 'はま寿司';
+        break;
+      case 4:
+        appBarText = 'かっぱ寿司';
+        break;
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarText),
@@ -34,7 +49,7 @@ late final User user;
                       setState(() {
                         sushiKubun = 1;
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => AllorOnly(sushiKubun)
+                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -45,7 +60,7 @@ late final User user;
                       setState(() {
                         sushiKubun = 2;
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => AllorOnly(sushiKubun)
+                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -66,7 +81,7 @@ late final User user;
                       setState(() {
                         sushiKubun = 3;
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => AllorOnly(sushiKubun)
+                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -77,7 +92,7 @@ late final User user;
                       setState(() {
                         sushiKubun = 4;
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => AllorOnly(sushiKubun)
+                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -92,7 +107,7 @@ late final User user;
   }
 }
 
-class AllorOnly extends StatelessWidget {
+/*  class AllorOnly extends StatelessWidget {
 
   AllorOnly(this.sushiKubun);
    int sushiKubun;
@@ -148,3 +163,5 @@ class AllorOnly extends StatelessWidget {
     );
   }
 }
+
+ */
