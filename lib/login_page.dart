@@ -118,6 +118,16 @@ class _LoginPageState extends State<LoginPage> {
                   });
                 },
                 child: Text('テスト用'),
+              ),
+
+              ElevatedButton(
+                onPressed: () async{
+                  setState(() {
+                    email = 'test2nd@example.com';
+                    password = 'testpass';
+                  });
+                },
+                child: Text('テスト用2こめ'),
               )
             ],
           ),

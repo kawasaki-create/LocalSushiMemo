@@ -11,28 +11,14 @@ class Roulette extends StatefulWidget {
 }
 
 class _RouletteState extends State<Roulette> {
-  String appBarText = 'お店選択';
+  String appBarText = '';
   int sushiKubun = 0;
 
 late final User user;
 
   @override
   Widget build(BuildContext context) {
-    switch(sushiKubun){
-      case 1:
-        appBarText = 'スシロー';
-        break;
-      case 2:
-        appBarText = 'くら寿司';
-        break;
-      case 3:
-        appBarText = 'はま寿司';
-        break;
-      case 4:
-        appBarText = 'かっぱ寿司';
-        break;
-    }
-
+    appBarText = 'お店選択';
     return Scaffold(
       appBar: AppBar(
         title: Text(appBarText),
@@ -48,6 +34,7 @@ late final User user;
                     onPressed: () async{
                       setState(() {
                         sushiKubun = 1;
+                        appBarText = 'スシロー';
                         Navigator.push(context,MaterialPageRoute(
                             builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
@@ -59,6 +46,7 @@ late final User user;
                     onPressed: () async{
                       setState(() {
                         sushiKubun = 2;
+                        appBarText = 'くら寿司';
                         Navigator.push(context,MaterialPageRoute(
                             builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
@@ -80,6 +68,7 @@ late final User user;
                     onPressed: () async{
                       setState(() {
                         sushiKubun = 3;
+                        appBarText = 'はま寿司';
                         Navigator.push(context,MaterialPageRoute(
                             builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));
@@ -91,6 +80,7 @@ late final User user;
                     onPressed: () async{
                       setState(() {
                         sushiKubun = 4;
+                        appBarText = 'かっぱ寿司';
                         Navigator.push(context,MaterialPageRoute(
                             builder:(context) => ListBox(appBarText, sushiKubun.toString())
                         ));

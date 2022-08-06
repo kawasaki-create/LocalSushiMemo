@@ -9,6 +9,7 @@ import 'package:sushi_memo_sns/twitterShere.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:sushi_memo_sns/post_page.dart';
+import 'dart:io';
 
 class scraping extends StatefulWidget {
 
@@ -102,14 +103,15 @@ class _scrapingState extends State<scraping> {
   }
 
   class _ListBoxState extends State<ListBox> {
-
     _ListBoxState(this.appBarText, this.sushiKubun);
     String appBarText;
     String sushiKubun;
+    int addPoint = 0;
+    int totalPoint = 0;
     List sushiroMenuName = [];
     List sushiroMenuPrice = [];
     List ateList = [];
-   late int RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
+   late int RandomSushiroMenu =  Random().nextInt(sushiroMenuPrice.length);
 
     sushiroSC() async {
       var url = 'https://www.akindo-sushiro.co.jp/menu/';
@@ -120,7 +122,6 @@ class _scrapingState extends State<scraping> {
         sushiroMenuName = controller.window!.document.querySelectorAll('span > .ttl');
         sushiroMenuPrice = controller.window!.document.querySelectorAll('span > .price');
       });
-
     }
 
     @override
@@ -130,7 +131,7 @@ class _scrapingState extends State<scraping> {
         appBar: AppBar(
           title: Text('お店：' + appBarText),
         ),
-        body: Center(
+        body:  Center(
           child: SingleChildScrollView(
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -150,7 +151,7 @@ class _scrapingState extends State<scraping> {
                           ateList.add(sushiroMenuName[RandomSushiroMenu].toString()
                               .replaceAll('<span class="ttl">', '').replaceAll('</span>', ''));
                           setState(() {
-                            RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
+                            RandomSushiroMenu =  Random().nextInt(sushiroMenuPrice.length);
                           });
                         },
                         child: Text('食べた')
@@ -158,7 +159,7 @@ class _scrapingState extends State<scraping> {
                     ElevatedButton(
                         onPressed: (){
                           setState(() {
-                            RandomSushiroMenu =  Random().nextInt(sushiroMenuName.length);
+                            RandomSushiroMenu =  Random().nextInt(sushiroMenuPrice.length);
                           });
                         },
                         child: Text('食べてない')
@@ -191,6 +192,7 @@ class _scrapingState extends State<scraping> {
                           .currentUser;
                         final email = user?.email;
 
+                        //食べたものリストの追記
                          await FirebaseFirestore.instance
                           .collection('eats')
                           .doc()
@@ -199,11 +201,27 @@ class _scrapingState extends State<scraping> {
                             'ate' :  ateList.toString(),
                             'email' : email
                           });
+
+                         //もしデータがあれば合計ポイントを取得する。なければ新設
+
+                        await FirebaseFirestore.instance
+                         .collection('Points')
+                         .doc(email)
+                         .get()
+                         .then((snapshot){
+                           if(snapshot.exists) {
+                             totalPoint = snapshot.get('totalPoint');
+                           }
+                        });
+
+                        //合計ポイントに今回ポイントを追加する
+                        addPoint = ateList.length * 2;
+                        totalPoint += addPoint;
                          await FirebaseFirestore.instance
                         .collection('Points')
                          .doc(email)
                          .set({
-                           'totalPoint': '3'
+                           'totalPoint': totalPoint
                          });
                        /* setState(() {
                           ateList = [];
