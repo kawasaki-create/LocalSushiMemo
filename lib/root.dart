@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sushi_memo_sns/routes/game_route.dart';
+import 'package:sushi_memo_sns/routes/rank_route.dart';
 import 'package:sushi_memo_sns/routes/home_route.dart';
 import 'package:sushi_memo_sns/routes/notice_route.dart';
 import 'package:sushi_memo_sns/routes/roulette_route.dart';
 import 'package:sushi_memo_sns/post_page.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class RootWidget extends StatefulWidget {
   // 引数からユーザー情報を受け取る
@@ -28,24 +29,24 @@ class _RootWidget extends State<RootWidget> {
 
   //アイコン情報
   static const _RootWidgetIcons = [
-    Icons.home,
-    Icons.notifications_active,
-    Icons.smart_toy,
-    Icons.outlined_flag,
+    FontAwesomeIcons.dove,
+    FontAwesomeIcons.user,
+    FontAwesomeIcons.database,
+    FontAwesomeIcons.rankingStar,
   ];
     //アイコン文字列
   static const _RootWidgetItemNames = [
-    'ホーム',
-    '通知',
-    'ランダム',
+    'つぶやき',
+    'プロフィール',
+    'すしめも！',
     'ランキング',
   ];
 
   var _routes = [
     Home(),
-    Notice(),
+    Profile(),
     Roulette(),
-    Game(),
+    Ranking(),
   ];
   @override
   void initState() {

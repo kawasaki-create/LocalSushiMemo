@@ -191,6 +191,7 @@ class _scrapingState extends State<scraping> {
                         final user =  await FirebaseAuth.instance
                           .currentUser;
                         final email = user?.email;
+                        final uid = user?.uid;
 
                         //食べたものリストの追記
                          await FirebaseFirestore.instance
@@ -205,8 +206,8 @@ class _scrapingState extends State<scraping> {
                          //もしデータがあれば合計ポイントを取得する。なければ新設
 
                         await FirebaseFirestore.instance
-                         .collection('Points')
-                         .doc(email)
+                         .collection('users')
+                         .doc(uid)
                          .get()
                          .then((snapshot){
                            if(snapshot.exists) {
@@ -218,8 +219,8 @@ class _scrapingState extends State<scraping> {
                         addPoint = ateList.length * 2;
                         totalPoint += addPoint;
                          await FirebaseFirestore.instance
-                        .collection('Points')
-                         .doc(email)
+                        .collection('users')
+                         .doc(uid)
                          .set({
                            'totalPoint': totalPoint
                          });

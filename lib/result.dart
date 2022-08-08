@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_memo_sns/root.dart';
 import 'package:sushi_memo_sns/routes/roulette_route.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 class casherResult extends StatefulWidget {
   casherResult(this.ateList);
   List ateList;
@@ -12,6 +14,8 @@ class casherResult extends StatefulWidget {
 class _casherResultState extends State<casherResult> {
   _casherResultState(this.ateList);
   List ateList;
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -61,10 +65,12 @@ class _casherResultState extends State<casherResult> {
             ),
             Text('\n\n付与しました\n\n'),
             ElevatedButton(
-              child: Text('ログインページへ移動'),
-              onPressed: (){
+              child: Text('最初のページへ移動'),
+              onPressed: () async{
+                final user = FirebaseAuth.instance
+                .currentUser;
                 Navigator.push(context,MaterialPageRoute(
-                    builder:(context) => Roulette()
+                    builder:(context) => RootWidget(user!)
                 ));
               },
             ),
