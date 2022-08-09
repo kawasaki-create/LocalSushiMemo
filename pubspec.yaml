@@ -45,6 +45,7 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   url_launcher: ^6.1.5
   material_design_icons_flutter: ^5.0.6996
+  image_picker: ^0.8.5+3
 
 
 dev_dependencies:
