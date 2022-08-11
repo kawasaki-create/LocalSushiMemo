@@ -183,7 +183,6 @@ class _scrapingState extends State<scraping> {
                 Text('\n\n\n'),
                 SizedBox(
                    width: double.infinity,
-
                    child: ElevatedButton(
                       onPressed: () async{
                         final date =

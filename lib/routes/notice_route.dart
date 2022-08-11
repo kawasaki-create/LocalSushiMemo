@@ -74,19 +74,82 @@ class _ProfileState extends State<Profile> {
                                       topRight: Radius.circular(20),
                                     ),
                                   ),
-                              //    child: Text('oo'),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text('プロフィール画像：'),
+                                          ElevatedButton(
+                                            onPressed: (){
+                                              getImage();
+                                            },
+                                            child: Text('ライブラリから選択')
+                                          ),
+                                        ],
+                                      ),
+                                      Text('\n'),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text('ユーザーID：'),
+                                          Expanded(
+                                            child: TextFormField(
+                                              decoration: InputDecoration(labelText: '英数字15字以内'),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text('アカウント名：'),
+                                          Expanded(
+                                            child: TextFormField(
+
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text('自己紹介：'),
+                                          Expanded(
+                                            child: TextFormField(
+                                              keyboardType: TextInputType.multiline,
+                                              maxLines: null,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      Text('\n\n'),
+                                      SizedBox(
+                                        width: double.infinity,
+                                        child: ElevatedButton(
+                                            onPressed: (){
+
+                                            },
+                                            child: Text('更新'),
+                                          style: ElevatedButton.styleFrom(
+                                              primary: Colors.pinkAccent
+                                          ),
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
                                 );
                               },
                           );
                         },
-                        child: Text('画像を選択する'),
+                        child: Text('編集'),
                       ),
                     ),
                 ),
 
               ],
             ),
-
           ],
         ),
       ),

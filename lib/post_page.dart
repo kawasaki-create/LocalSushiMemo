@@ -37,6 +37,7 @@ class _AddPostPageState extends State<AddPostPage>{
                 decoration: InputDecoration(labelText: '投稿メッセージ'),
                 // 複数行のテキスト入力
                 keyboardType: TextInputType.multiline,
+                maxLines: null,
                 // 最大140字
                 maxLength: 140,
                 onChanged: (String value) {
