@@ -33,27 +33,60 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text("プロフィール"),
       ),
-      body: Center(
+      body: Container(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            ClipOval(
-              child:
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                ClipOval(
+                  child:
                   profIcon == null
-                    ? const Text('senntakuNot')
-                     : Image.file(
-                        profIcon!,
-                        width: 200,
-                        height: 200,
-                        fit: BoxFit.fill,
+                      ? const Text('')
+                      : Image.file(
+                    profIcon!,
+                    width: 100,
+                    height: 100,
+                    fit: BoxFit.fill,
+                  ),
+                ),
+                Align(
+                  alignment: Alignment.topRight,
+                   child: Container(
+                      child: ElevatedButton(
+                        onPressed: (){
+                            showModalBottomSheet(
+                              //モーダルの背景の色、透過
+                              backgroundColor: Colors.transparent,
+                              //ドラッグ可能にする（高さもハーフサイズからフルサイズになる様子）
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context){
+                                return Container(
+                                  margin: EdgeInsets.only(top: 64),
+                                  decoration: BoxDecoration(
+                                    //モーダル自体の色
+                                    color: Colors.white,
+                                    //角丸にする
+                                    borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(20),
+                                      topRight: Radius.circular(20),
+                                    ),
+                                  ),
+                              //    child: Text('oo'),
+                                );
+                              },
+                          );
+                        },
+                        child: Text('画像を選択する'),
                       ),
+                    ),
+                ),
+
+              ],
             ),
-            Container(
-              child: TextButton(
-                onPressed: getImage,
-                child: Text('画像を選択する'),
-              ),
-            )
+
           ],
         ),
       ),

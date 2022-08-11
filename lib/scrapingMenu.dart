@@ -204,7 +204,6 @@ class _scrapingState extends State<scraping> {
                           });
 
                          //もしデータがあれば合計ポイントを取得する。なければ新設
-
                         await FirebaseFirestore.instance
                          .collection('users')
                          .doc(uid)
