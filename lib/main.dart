@@ -16,6 +16,10 @@ class SushiMemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        fontFamily: "Noto Sans JP", // ここを追加
+      ),
       debugShowCheckedModeBanner: false,
       home:Scaffold(
         appBar: AppBar(),

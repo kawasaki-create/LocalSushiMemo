@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +22,6 @@ class Home extends StatefulWidget {
 }
 
 class _Home extends State<Home> {
-  List<DocumentSnapshot> docList = []; //dbのドキュメントを入れるリストを用意する
 
   final  Stream<QuerySnapshot<Map<String, dynamic>>> snapshotStream =
     FirebaseFirestore.instance
@@ -27,19 +29,18 @@ class _Home extends State<Home> {
       .orderBy('date', descending: true)
       .snapshots();
 
+
+  List<DocumentSnapshot> docList = []; //dbのドキュメントを入れるリストを用意する
+
   //ホームシュってやって更新するロジック
- /* Future _loadData() async {
+ Future<List>_loadData() async {
+   final streams = await FirebaseFirestore.instance
+      .collection('users')
+      .orderBy('date', descending: true)
+      .get();
 
-    await Future.delayed(Duration(seconds: 2));
-
-    print("loaded new data");
-
-    setState(() {
-      docList = snapshot as List<DocumentSnapshot<Object>>;
-    });
+    return  docList = streams.docs;
   }
-
-  */
 
   //アイコンボタン変更用
   int _counter = 0;
@@ -63,9 +64,10 @@ class _Home extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    // _loadData();
     return Scaffold(
       appBar: AppBar(
-        title: Text('ホーム画面'),
+        title: Text('つぶやき'),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.close),
@@ -83,88 +85,87 @@ class _Home extends State<Home> {
           ),
         ],
       ),
-      body: Center(
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: <Widget>[
-          ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            primary: Colors.blue,
-          ),
-          child: Text('更新'),
-          onPressed: () async {
-            // 指定コレクションのドキュメント一覧を取得
-            final snapshot = await FirebaseFirestore.instance
-                .collection('posts')
-                .orderBy("date",descending: true)
-                .get();
-            // ドキュメント一覧を配列で格納
-            setState(() {
-              docList = snapshot.docs;
-            });
-          },
-        ),
-        // ドキュメント情報を表示
-        Column(
-          children: docList.map((document) {
-            return Card(
+      body: StreamBuilder(
+        stream: snapshotStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot) {
+          return Center(
+            child: SingleChildScrollView(
               child: Column(
-                children: <Widget>[
-                  Container(
-                    margin: const EdgeInsets.all(10.0),
-                    width: 300,
-                    child: Text('${document['text']}\n' +  '${document['date'].substring(0,19).replaceFirst('T',' ')}'),
-                  ),
-                          Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    // ドキュメント情報を表示
+                    Column(
+                      children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document) {
+                        //Map<String, dynamic> data = document.data() as Map<String, dynamic>;
+                        return Card(
+                          child: Column(
                             children: <Widget>[
-                              if(iconchange == false)
-                                IconButton(
-                                    onPressed: () async {
-                                      _incrementCounter();
-                                      await FirebaseFirestore.instance
-                                          .collection('posts')
-                                          .doc(document.id)
-                                          .update({'isLike': _counter});
-                                    },
-                                    icon: Icon(Icons.favorite_border_outlined)
+                              Container(
+                                margin: const EdgeInsets.all(10.0),
+                                width: 300,
+                                child: Text('${document['text']}\n'),
+                              ),
+                             Container(
+                               child: Text(document['date'].substring(0,19).replaceFirst('T',' '),
+                                      style: TextStyle(
+                                        fontSize: 10
+                                        ),
+                                      ),
+                             ),
+                             /* Row(
+                                children: <Widget>[
+                                  if(iconchange == false)
+                                    IconButton(
+                                        onPressed: () async {
+                                          _incrementCounter();
+                                          await FirebaseFirestore.instance
+                                              .collection('posts')
+                                              .doc(document.id)
+                                              .update({'isLike': _counter});
+                                        },
+                                        icon: Icon(Icons.favorite_border_outlined)
+                                    ),
+                                  if(iconchange == true)
+                                    IconButton(
+                                        onPressed: () async {
+                                          _incrementCounter();
+                                          await FirebaseFirestore.instance
+                                              .collection('posts')
+                                              .doc(document.id)
+                                              .update({'isLike': _counter});
+                                        },
+                                        icon: Icon(
+                                          Icons.favorite, color: Colors.pink,)
+                                    ),
+                                  Text('${document['isLike']}'),
+                                ],
+                              ),
+
+                              */
+
+                              ElevatedButton(
+                                onPressed: () async {
+                                  await FirebaseFirestore.instance
+                                      .collection('posts')
+                                      .doc(document.id)
+                                      .delete();
+                                },
+                                child: Text('Delete'),
+                                style: ElevatedButton.styleFrom(
+                                  primary: Colors.orange,
                                 ),
-                              if(iconchange == true)
-                                IconButton(
-                                    onPressed: () async {
-                                      _incrementCounter();
-                                      await FirebaseFirestore.instance
-                                          .collection('posts')
-                                          .doc(document.id)
-                                          .update({'isLike': _counter});
-                                    },
-                                    icon: Icon(
-                                      Icons.favorite, color: Colors.pink,)
-                                ),
-                              Text('${document['isLike']}'),
+                              ),
                             ],
                           ),
-
-                          ElevatedButton(
-                            onPressed: () async {
-                              await FirebaseFirestore.instance
-                                  .collection('posts')
-                                  .doc(document.id)
-                                  .delete();
-                            },
-                            child: Text('Delete'),
-                            style: ElevatedButton.styleFrom(
-                              primary: Colors.orange,
-                            ),
-                          ),
-                        ],
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ]),
-    ),
-              // ドキュメント情報を表示
-      ));
+                        );
+                      }).toList(),
+                    ),
+                  ]),
+            ),
+            // ドキュメント情報を表示
+          );
+        },
+      ),
+    );
   }
 }

@@ -55,7 +55,7 @@ class _RankingState extends State<Ranking> {
               ),
               Text('\n'),
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
                     decoration: BoxDecoration(

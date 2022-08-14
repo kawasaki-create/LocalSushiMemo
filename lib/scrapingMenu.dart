@@ -221,7 +221,9 @@ class _scrapingState extends State<scraping> {
                          .doc(uid)
                          .set({
                            'totalPoint': totalPoint
-                         });
+                         },
+                           SetOptions(merge: true)
+                         );
                        /* setState(() {
                           ateList = [];
                         });
