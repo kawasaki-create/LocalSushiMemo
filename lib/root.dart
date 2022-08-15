@@ -63,12 +63,8 @@ class _RootWidget extends State<RootWidget> {
           _RootWidgetIcons[index],
           color: Colors.black87,
         ),
-        title: Text(
+        label:
           _RootWidgetItemNames[index],
-          style: TextStyle(
-            color: Colors.black87,
-          ),
-        )
     );
   }
 
@@ -79,12 +75,8 @@ class _RootWidget extends State<RootWidget> {
           _RootWidgetIcons[index],
           color: Colors.black26,
         ),
-        title: Text(
+        label:
           _RootWidgetItemNames[index],
-          style: TextStyle(
-            color: Colors.black26,
-          ),
-        )
     );
   }
 

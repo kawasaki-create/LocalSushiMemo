@@ -1,9 +1,14 @@
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:riverpod/riverpod.dart';
 
 class Profile extends StatefulWidget {
 
@@ -17,6 +22,7 @@ class _ProfileState extends State<Profile> {
   String introduce = '';
   List<DocumentSnapshot> docList = [];
   int waitSecond = 0;
+  late Image _img;
 
   final Stream<QuerySnapshot<Map<String, dynamic>>> _eventStream = FirebaseFirestore.instance
     .collection('users')
@@ -31,14 +37,39 @@ class _ProfileState extends State<Profile> {
     //カメラロールから読み取る
     //final pickedFile = await picker.getImage(source: ImageSource.gallery);
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
+    setState(() async{
       if (pickedFile != null) {
         profIcon = File(pickedFile.path);
+
       } else {
         print('画像が選択できませんでした。');
       }
     });
   }
+  /// ユーザIDの取得
+  final userIDs = FirebaseAuth.instance.currentUser?.uid ?? '';
+
+  void uploadPic() async {
+    try {
+      /// 画像を選択
+      final ImagePicker picker = ImagePicker();
+      final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+      File file = File(image!.path);
+
+      /// Firebase Cloud Storageにアップロード
+      String uploadName = 'image.png';
+      final storageRef =
+      FirebaseStorage.instance.ref().child('users/$userIDs/$uploadName');
+      final task = await storageRef.putFile(file);
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  final imageStateProvider = StateProvider<Uint8List?>((ref) => null);
+
+
+
 
   Future getUser() async{
     await Future.delayed(Duration(seconds: waitSecond));
@@ -77,6 +108,7 @@ class _ProfileState extends State<Profile> {
                 children: [
               Column(
               children: [
+
               Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -122,8 +154,9 @@ class _ProfileState extends State<Profile> {
                                       children: [
                                         Text('プロフィール画像：'),
                                         ElevatedButton(
-                                            onPressed: () {
-                                              getImage();
+                                            onPressed: () async{
+                                              uploadPic();
+
                                             },
                                             child: Text('ライブラリから選択')
                                         ),
@@ -215,12 +248,31 @@ class _ProfileState extends State<Profile> {
                                           setState(() {
                                             waitSecond = 1;
                                           });
+                                          Navigator.of(context).pop();
                                         },
                                         child: Text('更新'),
                                         style: ElevatedButton.styleFrom(
                                             primary: Colors.pinkAccent
                                         ),
                                       ),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () async{
+                                        final path = "test.png";
+                                        final storageeRef = FirebaseStorage.instance.ref();
+                                        final imageRef = storageeRef.child(path);
+
+                                        Directory appDocDir = await getApplicationDocumentsDirectory();
+                                        String filePath = '${appDocDir.absolute}/test.png';
+                                        File file = File(filePath);
+
+                                        try {
+                                          await imageRef.putFile(file);
+                                        } on FirebaseException catch (e) {
+                                          // ...
+                                        }
+                                      },
+                                      child: Text('UP'),
                                     ),
                                   ],
                                 ),

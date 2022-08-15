@@ -76,7 +76,7 @@ late final User user;
                     },
                     child: Text('はま寿司')
                 ),
-                ElevatedButton(
+               /* ElevatedButton(
                     onPressed: () async{
                       setState(() {
                         sushiKubun = 4;
@@ -88,6 +88,8 @@ late final User user;
                     },
                     child: Text('かっぱ寿司')
                 ),
+
+                */
               ],
             ),
           ],
