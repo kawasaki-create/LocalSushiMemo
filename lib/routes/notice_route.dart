@@ -66,9 +66,12 @@ class _ProfileState extends State<Profile> {
     }
   }
 
+  ///ファイルDL
   final imageStateProvider = StateProvider<Uint8List?>((ref) => null);
 
-
+  /// 画像のダウンロード
+   Uint8List? data;
+   String nullcheck = 'getUserが取得できてない';
 
 
   Future getUser() async{
@@ -89,6 +92,21 @@ class _ProfileState extends State<Profile> {
             introduce = snapshot.get('introduce');
           }
         });
+
+    final storageRef = FirebaseStorage.instance.ref();
+    final imageRef = storageRef.child("users/$userIDs/image.png");
+
+    try {
+        nullcheck = 'GUは取れてる';
+      const oneMegabyte = 1024 * 1024;
+       data = await imageRef.getData(oneMegabyte);
+      // Data for "images/island.jpg" is returned, use this as needed.
+    } on FirebaseException catch (e) {
+      // Handle any errors.
+      print('NO DATA');
+    }
+
+
   }
 
 
@@ -108,21 +126,18 @@ class _ProfileState extends State<Profile> {
                 children: [
               Column(
               children: [
-
               Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   ClipOval(
-                    child:
-                    profIcon == null
-                        ? const Text('')
-                        : Image.file(
-                      profIcon!,
+                    child:Image.network(
+                        'http://cmsimage.akindo-sushiro.co.jp/menu/160805_199.png',
                       width: 100,
                       height: 100,
                       fit: BoxFit.fill,
                     ),
                   ),
+
                   Align(
                     alignment: Alignment.topRight,
                     child: Container(
@@ -156,7 +171,6 @@ class _ProfileState extends State<Profile> {
                                         ElevatedButton(
                                             onPressed: () async{
                                               uploadPic();
-
                                             },
                                             child: Text('ライブラリから選択')
                                         ),
