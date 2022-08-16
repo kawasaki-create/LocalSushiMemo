@@ -57,7 +57,7 @@ class _ProfileState extends State<Profile> {
       File file = File(image!.path);
 
       /// Firebase Cloud Storageにアップロード
-      String uploadName = 'image.png';
+      String uploadName = 'image';
       final storageRef =
       FirebaseStorage.instance.ref().child('users/$userIDs/$uploadName');
       final task = await storageRef.putFile(file);
@@ -72,7 +72,6 @@ class _ProfileState extends State<Profile> {
   /// 画像のダウンロード
    Uint8List? data;
    String nullcheck = 'getUserが取得できてない';
-
 
   Future getUser() async{
     await Future.delayed(Duration(seconds: waitSecond));
@@ -94,11 +93,11 @@ class _ProfileState extends State<Profile> {
         });
 
     final storageRef = FirebaseStorage.instance.ref();
-    final imageRef = storageRef.child("users/$userIDs/image.png");
+    final imageRef = storageRef.child("users/$userIDs/image");
 
     try {
         nullcheck = 'GUは取れてる';
-      const oneMegabyte = 1024 * 1024;
+      const oneMegabyte = 10240 * 10240;
        data = await imageRef.getData(oneMegabyte);
       // Data for "images/island.jpg" is returned, use this as needed.
     } on FirebaseException catch (e) {
@@ -129,14 +128,18 @@ class _ProfileState extends State<Profile> {
               Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ClipOval(
-                    child:Image.network(
-                        'http://cmsimage.akindo-sushiro.co.jp/menu/160805_199.png',
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.fill,
+                  if(data != null)
+                    ClipOval(
+                      child:
+                      data == null
+                          ? Text(nullcheck)
+                          : Image.memory(
+                          data!,
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.fill,
+                      ),
                     ),
-                  ),
 
                   Align(
                     alignment: Alignment.topRight,
@@ -171,6 +174,7 @@ class _ProfileState extends State<Profile> {
                                         ElevatedButton(
                                             onPressed: () async{
                                               uploadPic();
+                                              Navigator.of(context).pop();
                                             },
                                             child: Text('ライブラリから選択')
                                         ),
