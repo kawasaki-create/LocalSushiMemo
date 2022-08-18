@@ -60,8 +60,6 @@ class _Home extends State<Home> {
       }
     }
 
-
-
   @override
   Widget build(BuildContext context) {
     // _loadData();
@@ -100,11 +98,13 @@ class _Home extends State<Home> {
                         return Card(
                           child: Column(
                             children: <Widget>[
+                              if(document['currentUser'] == FirebaseAuth.instance.currentUser?.uid)
                               Container(
                                 margin: const EdgeInsets.all(10.0),
                                 width: 300,
-                                child: Text('${document['text']}\n'),
+                                child: Text('${document['text']}'),
                               ),
+                              if(document['currentUser'] == FirebaseAuth.instance.currentUser?.uid)
                              Container(
                                child: Text(document['date'].substring(0,19).replaceFirst('T',' '),
                                       style: TextStyle(
@@ -142,7 +142,7 @@ class _Home extends State<Home> {
                               ),
 
                               */
-
+                              if(document['currentUser'] == FirebaseAuth.instance.currentUser?.uid)
                               ElevatedButton(
                                 onPressed: () async {
                                   await FirebaseFirestore.instance

@@ -10,7 +10,13 @@ class Ranking extends StatefulWidget {
 }
 
 class _RankingState extends State<Ranking> {
-  List<DocumentSnapshot> pointList = [];
+//  List<DocumentSnapshot> pointList = [];
+
+  final  Stream<QuerySnapshot<Map<String, dynamic>>> rankStream =
+      FirebaseFirestore.instance
+        .collection('users')
+        .orderBy('totalPoint', descending: true)
+        .snapshots();
 
   @override
   Widget build(BuildContext context) {
@@ -18,94 +24,46 @@ class _RankingState extends State<Ranking> {
       appBar: AppBar(
         title: Text("ランキング"),
       ),
-      body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      body: StreamBuilder(
+        stream: rankStream,
+        builder: (BuildContext context, AsyncSnapshot snapshot){
+         return Container(
+            child: SingleChildScrollView(
+              child: Column(
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                          border: Border.all(
+                              color: Colors.black
+                          ),
+                        ),
+                        child: Text('獲得ポイントランキング',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 20,
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text('デイリー',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
+                    ],
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black
-                      ),
-                    ),
-                    child: Text('マンスリー',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
+                  Text('\n'),
+                  Column(
+                    children: snapshot.data!.docs.map<Widget>((DocumentSnapshot document){
+                      return Card(
+                        child:
+                          Text('${document['userID']}・・・${document['totalPoint']} ポイント'),
+                      );
+                      }).toList(),
                   ),
+                  
                 ],
               ),
-              Text('\n'),
-              Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black
-                      ),
-                    ),
-                    child: Text('デイリー',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                          color: Colors.black
-                      ),
-                    ),
-                    child: Text('マンスリー',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                child: ElevatedButton(
-                  onPressed: () async{
-                    /*
-                     final snapshot =  FirebaseFirestore.instance
-                          .collection('Points')
-                          .orderBy("totalPoint", descending: true)
-                          .get();
-                     setState(() {
-                       pointList = snapshot.docs;
-                     });
-
-                     */
-                    },
-                  child: Text('更新'),
-                ),
-              ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

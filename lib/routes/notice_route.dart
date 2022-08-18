@@ -20,7 +20,8 @@ class _ProfileState extends State<Profile> {
   String userID = '';
   String accountName = '';
   String introduce = '';
-  List<DocumentSnapshot> docList = [];
+  String lastAte = '';
+  String lastAteOpen = '';
   int waitSecond = 0;
   late Image _img;
 
@@ -89,6 +90,7 @@ class _ProfileState extends State<Profile> {
             userID = snapshot.get('userID');
             accountName = snapshot.get('accountName');
             introduce = snapshot.get('introduce');
+            lastAte = snapshot.get('lastAte');
           }
         });
 
@@ -104,7 +106,6 @@ class _ProfileState extends State<Profile> {
       // Handle any errors.
       print('NO DATA');
     }
-
 
   }
 
@@ -174,7 +175,6 @@ class _ProfileState extends State<Profile> {
                                         ElevatedButton(
                                             onPressed: () async{
                                               uploadPic();
-                                              Navigator.of(context).pop();
                                             },
                                             child: Text('ライブラリから選択')
                                         ),
@@ -266,6 +266,7 @@ class _ProfileState extends State<Profile> {
                                           setState(() {
                                             waitSecond = 1;
                                           });
+                                          getUser();
                                           Navigator.of(context).pop();
                                         },
                                         child: Text('更新'),
@@ -273,24 +274,6 @@ class _ProfileState extends State<Profile> {
                                             primary: Colors.pinkAccent
                                         ),
                                       ),
-                                    ),
-                                    ElevatedButton(
-                                      onPressed: () async{
-                                        final path = "test.png";
-                                        final storageeRef = FirebaseStorage.instance.ref();
-                                        final imageRef = storageeRef.child(path);
-
-                                        Directory appDocDir = await getApplicationDocumentsDirectory();
-                                        String filePath = '${appDocDir.absolute}/test.png';
-                                        File file = File(filePath);
-
-                                        try {
-                                          await imageRef.putFile(file);
-                                        } on FirebaseException catch (e) {
-                                          // ...
-                                        }
-                                      },
-                                      child: Text('UP'),
                                     ),
                                   ],
                                 ),
@@ -307,6 +290,25 @@ class _ProfileState extends State<Profile> {
               Text(userID),
               Text(accountName),
               Text(introduce),
+              Text('\n\n'),
+             SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () async{
+                    setState(() {
+                      if(lastAte != null){
+                        setState(() {
+                          lastAteOpen = lastAte;
+                        });
+                      }
+                    });
+                  },
+                  child: Text('今までに食べたものリスト'),
+                ),
+              ),
+                  Center(
+                    child: Text(lastAteOpen),
+                  ),
                 ],
             )]
               )

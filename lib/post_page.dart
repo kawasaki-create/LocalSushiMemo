@@ -64,7 +64,8 @@ class _AddPostPageState extends State<AddPostPage>{
                         'text': messageText,
                         'email': email,
                         'date': date,
-                        'isLike': Home().counter
+                        'isLike': Home().counter,
+                        'currentUser': widget.user.uid,
                       });
                     }
                     // 1つ前の画面に戻る

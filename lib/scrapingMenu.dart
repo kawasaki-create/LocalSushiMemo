@@ -113,6 +113,7 @@ class _scrapingState extends State<scraping> {
     List ateList = [];
     String replaceMenu = '';
     String replacePrice = '';
+    String lastAte = '';
    late int RandomMenu =  Random().nextInt(menuName.length);
 
     sushiroSC() async {
@@ -230,6 +231,10 @@ class _scrapingState extends State<scraping> {
                    width: double.infinity,
                    child: ElevatedButton(
                       onPressed: () async{
+                        //前回食べたものとして定義
+                        setState(() {
+                          lastAte = '前回' + appBarText + 'で食べたのは\n\n' + ateList.toString().replaceAll('[', '').replaceAll(']', '') + '\n\nです';
+                        });
                         final date =
                         DateTime.now().toLocal().toIso8601String(); // 現在の日時
                         final user =  await FirebaseAuth.instance
@@ -247,28 +252,46 @@ class _scrapingState extends State<scraping> {
                             'email' : email
                           });
 
-                         //もしデータがあれば合計ポイントを取得する。なければ新設
+                         //前回食べたものリストに載せる
                         await FirebaseFirestore.instance
-                         .collection('users')
-                         .doc(uid)
-                         .get()
-                         .then((snapshot){
-                           if(snapshot.exists) {
-                             totalPoint = snapshot.get('totalPoint');
-                           }
-                        });
+                            .collection('users')
+                            .doc(uid)
+                            .set({
+                          'lastAte' : lastAte
+                        },
+                            SetOptions(merge: true)
+                        );
+
+                         //もしデータがあれば合計ポイントを取得する。なければ新設
+                        try {
+                          await  FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(uid)
+                              .get()
+                              .then((snapshot){
+                            totalPoint = snapshot.get('totalPoint');
+                          },
+
+                          );
+                        }catch(e){
+
+                        }
+
+
+
 
                         //合計ポイントに今回ポイントを追加する
                         addPoint = ateList.length * 2;
-                        totalPoint += addPoint;
-                         await FirebaseFirestore.instance
-                        .collection('users')
-                         .doc(uid)
-                         .set({
-                           'totalPoint': totalPoint
-                         },
-                           SetOptions(merge: true)
-                         );
+                          totalPoint += addPoint;
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(uid)
+                              .set({
+                            'totalPoint': totalPoint
+                          },
+                              SetOptions(merge: true)
+                          );
+
                        /* setState(() {
                           ateList = [];
                         });
