@@ -139,7 +139,7 @@ void _launchURL(String url) async {
 ///新しいやつ
 /// 強制アップデートダイアログを出す為のダミーに近いStatefulWidget
 class Updater extends StatefulWidget {
-  Updater({Key? key, required this.appStoreUrl, required this.playStoreUrl}) : super(key: key);
+  Updater({Key? key, required this.appStoreUrl,  required this.playStoreUrl}) : super(key: key);
   final String appStoreUrl;
   final String playStoreUrl;
   @override
@@ -147,7 +147,7 @@ class Updater extends StatefulWidget {
 }
 
   class _UpdaterState extends State<Updater> {
-  _UpdaterState({required this.appStoreUrl, required this.playStoreUrl});
+  _UpdaterState({required this.appStoreUrl,  required this.playStoreUrl});
   final String appStoreUrl;
   final String playStoreUrl;
 

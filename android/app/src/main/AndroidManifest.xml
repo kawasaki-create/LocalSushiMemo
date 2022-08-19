@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sushi_memo_sns">
    <application
-        android:label="sushi_memo_sns"
+        android:label="すしめも！"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         android:requestLegacyExternalStorage=”true”

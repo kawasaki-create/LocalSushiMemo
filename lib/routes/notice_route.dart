@@ -303,7 +303,7 @@ class _ProfileState extends State<Profile> {
                       }
                     });
                   },
-                  child: Text('今までに食べたものリスト'),
+                  child: Text('前回食べたものリスト'),
                 ),
               ),
                   Center(

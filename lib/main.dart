@@ -38,6 +38,7 @@ class bodyContents extends StatelessWidget {
       child: ElevatedButton(
         child: Text('ログインページへ移動'),
         onPressed: (){
+          Updater(playStoreUrl: 'https://rinpos.com', appStoreUrl: 'https://kawasaki-create.com',);
           Navigator.push(context,MaterialPageRoute(
               builder:(context) => LoginPage()
           ));
