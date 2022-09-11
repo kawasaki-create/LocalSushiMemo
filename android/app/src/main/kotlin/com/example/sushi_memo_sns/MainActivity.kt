@@ -1,4 +1,4 @@
-package com.example.sushi_memo_sns
+package com.sushi_memo_sns
 
 import io.flutter.embedding.android.FlutterActivity
 

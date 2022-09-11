@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:800489451485:android:849b25061d0eb7aa4c1034",
         "android_client_info": {
-          "package_name": "com.example.sushi_memo_sns"
+          "package_name": "com.sushi_memo_sns"
         }
       },
       "oauth_client": [

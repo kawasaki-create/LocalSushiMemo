@@ -181,7 +181,7 @@ class Updater extends StatefulWidget {
           title: Text(title),
           content: Text(message),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 btnLabel,
                 style: TextStyle(color: Colors.red),
@@ -194,7 +194,7 @@ class Updater extends StatefulWidget {
           title: Text(title),
           content: Text(message),
           actions: <Widget>[
-            FlatButton(
+            TextButton(
               child: Text(
                 btnLabel,
                 style: TextStyle(color: Colors.red),

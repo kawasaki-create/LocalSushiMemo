@@ -1,15 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sushi_memo_sns/result.dart';
-import 'package:sushi_memo_sns/root.dart';
-import 'package:universal_html/controller.dart';
-import 'package:sushi_memo_sns/routes/roulette_route.dart';
+import 'package:universal_html/driver.dart';
 import 'dart:math';
 import 'package:sushi_memo_sns/twitterShere.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:sushi_memo_sns/post_page.dart';
-import 'dart:io';
 
 class scraping extends StatefulWidget {
 
@@ -23,8 +18,8 @@ class _scrapingState extends State<scraping> {
 
   String sushiroMenuPicStr = '';
 
-    sushiroSC() async {
-    final controller = WindowController();
+   /* sushiroSC() async {
+    final driver = new HtmlDriver();
     await controller.openHttp(
       uri: Uri.parse('https://www.akindo-sushiro.co.jp/menu/'),
     );
@@ -40,6 +35,7 @@ class _scrapingState extends State<scraping> {
 
     });
   }
+    */
 
   String appBarText = '上のやつ';
 
@@ -56,7 +52,7 @@ class _scrapingState extends State<scraping> {
             children: <Widget>[
               ElevatedButton(
                 onPressed: (){
-                  sushiroSC();
+             //     sushiroSC();
                   appBarText = '今ボタン押しましたね';
                 },
                 child: Text('絶対押すなよ！'),
@@ -116,15 +112,15 @@ class _scrapingState extends State<scraping> {
     String lastAte = '';
    late int RandomMenu =  Random().nextInt(menuName.length);
 
-    sushiroSC() async {
+   Future sushiroSC() async {
       switch(sushiKubun){
         case '1':
           var url = 'https://www.akindo-sushiro.co.jp/menu/';
-          final controller = WindowController();
-          await controller.openHttp(uri: Uri.parse(url));
+          final driver = new HtmlDriver();
+          await driver.setDocumentFromUri(Uri.parse(url));
           setState(() {
-            menuName = controller.window!.document.querySelectorAll('span > .ttl');
-            menuPrice = controller.window!.document.querySelectorAll('span > .price');
+            menuName = driver.document.querySelectorAll('span > .ttl');
+            menuPrice = driver.document.querySelectorAll('span > .price');
             replaceMenu = menuName[RandomMenu].toString()
                 .replaceAll('<span class="ttl">', '').replaceAll('</span>', '');
             replacePrice = menuPrice[RandomMenu].toString()
@@ -133,10 +129,11 @@ class _scrapingState extends State<scraping> {
         break;
         case '2':
           var url = 'https://www.kurasushi.co.jp/menu/?area=area0';
-          final controller = WindowController();
-          await controller.openHttp(uri: Uri.parse(url));
+          final driver = new HtmlDriver();
+          await driver.setDocumentFromUri(Uri.parse(url));
+
           setState(() {
-            menuName = controller.window!.document.querySelectorAll('.menu-section .menu-name');
+            menuName = driver.document.querySelectorAll('.menu-name');
            // menuPrice = controller.window!.document.querySelectorAll('.menu-summary > li > p');
             replaceMenu = menuName[RandomMenu].toString()
                 .replaceAll('<h4 class="menu-name">', '').replaceAll('</h4>', '');
@@ -148,10 +145,10 @@ class _scrapingState extends State<scraping> {
         break;
         case '3':
           var url = 'https://www.hama-sushi.co.jp/menu/';
-          final controller = WindowController();
-          await controller.openHttp(uri: Uri.parse(url));
+          final driver = new HtmlDriver();
+          await driver.setDocumentFromUri(Uri.parse(url));
           setState(() {
-            menuName = controller.window!.document.querySelectorAll('.men-products-item__text');
+            menuName = driver.document.querySelectorAll('.men-products-item__text');
            // menuPrice = controller.window!.document.querySelectorAll('span > .price');
             replaceMenu = menuName[RandomMenu].toString()
                 .replaceAll('<div class="men-products-item__text">', '').replaceAll('</div>', '')
@@ -160,10 +157,10 @@ class _scrapingState extends State<scraping> {
           break;
         case '4':
           var url = 'https://www.kappasushi.jp/menu2';
-          final controller = WindowController();
-          await controller.openHttp(uri: Uri.parse(url));
+          final driver = new HtmlDriver();
+          await driver.setDocumentFromUri(Uri.parse(url));
           setState(() {
-            menuName = controller.window!.document.querySelectorAll('.menu .name');
+            menuName = driver.document.querySelectorAll('.menu .name');
            // menuPrice = controller.window!.document.querySelectorAll('span > .price');
             replaceMenu = menuName[RandomMenu].toString()
                 .replaceAll('<div class="men-products-item__text">', '').replaceAll('</div>', '');
@@ -185,7 +182,7 @@ class _scrapingState extends State<scraping> {
             child: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
-                Text('あなたが次に食べるのは・・・\n\n'),
+                  Text('あなたが次に食べるのは・・・\n\n'),
                   Text(replaceMenu),
                   Text(replacePrice),
                   Text('\n\n'),
