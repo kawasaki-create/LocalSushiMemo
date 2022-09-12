@@ -1,19 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:sushi_memo_sns/root.dart';
-import 'package:sushi_memo_sns/scrapingMenu.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
+class Guestroulette extends StatefulWidget {
+  const Guestroulette({Key? key}) : super(key: key);
 
-class Roulette extends StatefulWidget {
-  get user => RootWidget(user);
   @override
-  _RouletteState createState() => _RouletteState();
+  State<Guestroulette> createState() => _GuestrouletteState();
 }
-class _RouletteState extends State<Roulette> {
+
+class _GuestrouletteState extends State<Guestroulette> {
   String appBarText = '';
   int sushiKubun = 0;
-
-late final User user;
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +31,7 @@ late final User user;
                         sushiKubun = 1;
                         appBarText = 'スシロー';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -47,7 +43,7 @@ late final User user;
                         sushiKubun = 2;
                         appBarText = 'くら寿司';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -69,7 +65,7 @@ late final User user;
                         sushiKubun = 3;
                         appBarText = 'はま寿司';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -81,7 +77,7 @@ late final User user;
                         sushiKubun = 4;
                         appBarText = 'かっぱ寿司';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => ListBox(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -97,62 +93,3 @@ late final User user;
     );
   }
 }
-
-/*  class AllorOnly extends StatelessWidget {
-
-  AllorOnly(this.sushiKubun);
-   int sushiKubun;
-
-   String appBarText = 'お店選択';
-
-  @override
-  Widget build(BuildContext context) {
-    switch(sushiKubun){
-      case 0:
-          appBarText = '条件が正しくありません';
-          break;
-      case 1:
-         appBarText = 'スシロー';
-         break;
-      case 2:
-         appBarText = 'くら寿司';
-         break;
-      case 3:
-         appBarText = 'はま寿司';
-         break;
-      case 4:
-         appBarText = 'かっぱ寿司';
-         break;
-    }
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('お店：' + appBarText),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            ElevatedButton(
-                onPressed: (){
-
-                },
-                child: Text('寿司オンリー'),
-            ),
-            Text('\n'),
-            ElevatedButton(
-              onPressed: () async{
-                Navigator.push(context,MaterialPageRoute(
-                    builder:(context) => ListBox(appBarText, sushiKubun.toString())
-                ));
-              },
-              child: Text('全メニュー'),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
- */

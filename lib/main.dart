@@ -35,15 +35,54 @@ class bodyContents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: ElevatedButton(
-        child: Text('ログインページへ移動'),
-        onPressed: (){
-          Updater(playStoreUrl: 'https://rinpos.com', appStoreUrl: 'https://kawasaki-create.com',);
-          Navigator.push(context,MaterialPageRoute(
-              builder:(context) => LoginPage()
-          ));
-        },
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('🍣おすすめ🍣'),
+          Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.red, width: 6),
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Column(
+              children: [
+                Text('ログインして使う',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20,
+                  ),
+                ),
+                ElevatedButton(
+                  child: Text('ログインページへ移動'),
+                  onPressed: (){
+                    Updater(playStoreUrl: 'https://rinpos.com', appStoreUrl: 'https://kawasaki-create.com',);
+                    Navigator.push(context,MaterialPageRoute(
+                        builder:(context) => LoginPage()
+                    ));
+                  },
+                ),
+              ],
+            ),
+          ),
+          Text('\n\n'),
+          Text('ログインせずに使う'),
+          SizedBox(
+            child: ElevatedButton(
+              child: Text('ゲストユーザ版へ移動'),
+              onPressed: (){
+                Updater(playStoreUrl: 'https://rinpos.com', appStoreUrl: 'https://kawasaki-create.com',);
+                Navigator.push(context,MaterialPageRoute(
+                    builder:(context) => LoginPage()
+                ));
+              },
+            ),
+          ),
+          Text('\n\n'),
+          Text('※登録すると結果を記録できます')
+        ],
       ),
+
     );
   }
 }

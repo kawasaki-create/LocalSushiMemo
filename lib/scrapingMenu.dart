@@ -93,7 +93,7 @@ class _scrapingState extends State<scraping> {
     ListBox(this.appBarText, this.sushiKubun);
     String appBarText;
     String sushiKubun;
-
+2
     @override
     _ListBoxState createState() => _ListBoxState(appBarText, sushiKubun);
   }
