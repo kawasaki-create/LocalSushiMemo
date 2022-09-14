@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:sushi_memo_sns/login_page.dart';
+import 'package:sushi_memo_sns/main.dart';
 import 'package:sushi_memo_sns/result.dart';
 import 'package:universal_html/driver.dart';
 import 'dart:math';
@@ -7,16 +9,20 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class Guestroulette2 extends StatefulWidget {
-
+  Guestroulette2(this.appBarText, this.sushiKubun);
+  String appBarText;
+  String sushiKubun;
 
 
   @override
-  State<Guestroulette2> createState() => _Guestroulette2State();
+  State<Guestroulette2> createState() => _Guestroulette2State(appBarText, sushiKubun);
 }
 
 class _Guestroulette2State extends State<Guestroulette2> {
-  String appBarText = '';
-  String sushiKubun = '';
+  _Guestroulette2State(this.appBarText, this.sushiKubun);
+  String appBarText;
+  String sushiKubun;
+
   List menuName = [];
   List menuPrice = [];
   List ateList = [];
@@ -135,7 +141,22 @@ class _Guestroulette2State extends State<Guestroulette2> {
                 ),
                 for(int i = 0; i < ateList.length; i ++)
                   Text(ateList[i]),
-                Text('\n\n\n'),SizedBox(
+                Text('\n\n\n'),
+                SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: (){
+                        Navigator.push(context,MaterialPageRoute(
+                            builder:(context) => GuestResult(appBarText, ateList.toString())
+                        ));
+                      },
+                      child: Text('会計'),
+                      style: ElevatedButton.styleFrom(
+                          primary: Colors.pinkAccent
+                      ),
+                    ),
+                ),
+                SizedBox(
                   width: double.infinity,
                   child: TwitterShareWidget(
                     text: '今回' + appBarText + 'で食べたのは\n\n' + ateList.toString()
@@ -150,6 +171,50 @@ class _Guestroulette2State extends State<Guestroulette2> {
     )
     );
   }
+}
 
+class GuestResult extends StatelessWidget {
+GuestResult(this.appBarText, this.ateList);
+  String appBarText;
+  String ateList;
 
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('食べた物集計'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Container(
+              child: Text('今回' + appBarText + 'で食べたのは\n\n'),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                border: Border.all(color: Colors.red),
+              ),
+              child: Text(ateList.replaceAll('[', '').replaceAll(']', ''),
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 20,
+                ),
+              ),
+            ),
+            Text('\n\n🍣です🍣\n\n'),
+            ElevatedButton(
+              child: Text('最初のページへ移動'),
+              onPressed: () {
+                Navigator.push(context,MaterialPageRoute(
+                    builder:(context) => SushiMemo(),
+                ));
+              },
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }

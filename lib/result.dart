@@ -28,9 +28,6 @@ class _casherResultState extends State<casherResult> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              child: Text('お会計'),
-            ),
-            Container(
               child: Text('あなたが食べたのは・・・\n\n'),
             ),
             Container(

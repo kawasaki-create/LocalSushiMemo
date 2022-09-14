@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'non-login-scraping.dart';
 
 class Guestroulette extends StatefulWidget {
   const Guestroulette({Key? key}) : super(key: key);
@@ -31,7 +32,7 @@ class _GuestrouletteState extends State<Guestroulette> {
                         sushiKubun = 1;
                         appBarText = 'スシロー';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette2(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -43,7 +44,7 @@ class _GuestrouletteState extends State<Guestroulette> {
                         sushiKubun = 2;
                         appBarText = 'くら寿司';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette2(appBarText, sushiKubun.toString())
                         ));
                       });
                     },
@@ -65,7 +66,7 @@ class _GuestrouletteState extends State<Guestroulette> {
                         sushiKubun = 3;
                         appBarText = 'はま寿司';
                         Navigator.push(context,MaterialPageRoute(
-                            builder:(context) => Guestroulette(appBarText, sushiKubun.toString())
+                            builder:(context) => Guestroulette2(appBarText, sushiKubun.toString())
                         ));
                       });
                     },

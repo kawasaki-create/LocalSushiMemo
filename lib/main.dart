@@ -1,6 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:sushi_memo_sns/guestroulette.dart';
 import 'VersionCheckService.dart';
 import 'login_page.dart';
 import 'root.dart';
@@ -24,7 +25,9 @@ class SushiMemo extends StatelessWidget {
       ),
       debugShowCheckedModeBanner: false,
       home:Scaffold(
-        appBar: AppBar(),
+        appBar: AppBar(
+          title: Text('🍣すしめも！🍣'),
+        ),
         body: bodyContents(),
       ),
     );
@@ -71,9 +74,9 @@ class bodyContents extends StatelessWidget {
             child: ElevatedButton(
               child: Text('ゲストユーザ版へ移動'),
               onPressed: (){
-                Updater(playStoreUrl: 'https://rinpos.com', appStoreUrl: 'https://kawasaki-create.com',);
+                Updater(playStoreUrl: 'https://play.google.com/store/apps/details?id=com.sushi_memo_sns&hl=en-US&ah=uHAni3GfAGZjRZa7H6-3_zMAfPw', appStoreUrl: 'https://kawasaki-create.com',);
                 Navigator.push(context,MaterialPageRoute(
-                    builder:(context) => LoginPage()
+                    builder:(context) => Guestroulette()
                 ));
               },
             ),
