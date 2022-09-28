@@ -69,7 +69,6 @@ class _ProfileState extends State<Profile> {
 
   ///ファイルDL
   final imageStateProvider = StateProvider<Uint8List?>((ref) => null);
-
   /// 画像のダウンロード
    Uint8List? data;
    String nullcheck = 'getUserが取得できてない';
@@ -96,11 +95,10 @@ class _ProfileState extends State<Profile> {
 
     final storageRef = FirebaseStorage.instance.ref();
     final imageRef = storageRef.child("users/$userIDs/image");
-
     try {
         nullcheck = 'GUは取れてる';
       const oneMegabyte = 10240 * 10240;
-       data = await imageRef.getData(oneMegabyte);
+        data = await imageRef.getData(oneMegabyte);
       // Data for "images/island.jpg" is returned, use this as needed.
     } on FirebaseException catch (e) {
       // Handle any errors.
@@ -132,10 +130,15 @@ class _ProfileState extends State<Profile> {
                   if(data != null)
                     ClipOval(
                       child:
-                      data == null
-                          ? Text(nullcheck)
+                      data! == null
+                          ? Image.network(
+                        'https://cdn-icons-png.flaticon.com/512/1946/1946429.png',
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.fill,
+                      )
                           : Image.memory(
-                          data!,
+                        data!,
                         width: 100,
                         height: 100,
                         fit: BoxFit.fill,

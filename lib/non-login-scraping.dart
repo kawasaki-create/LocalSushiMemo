@@ -164,7 +164,7 @@ class _Guestroulette2State extends State<Guestroulette2> {
                         '@kwsk_create より',
                     key: UniqueKey(),
                   )
-                )
+                ),
     ]
        ),
     )

@@ -74,7 +74,7 @@ class bodyContents extends StatelessWidget {
             child: ElevatedButton(
               child: Text('ゲストユーザ版へ移動'),
               onPressed: (){
-                Updater(playStoreUrl: 'https://play.google.com/store/apps/details?id=com.sushi_memo_sns&hl=en-US&ah=uHAni3GfAGZjRZa7H6-3_zMAfPw', appStoreUrl: 'https://kawasaki-create.com',);
+                Updater(playStoreUrl: 'https://play.google.com/store/apps/details?id=com.sushi_memo_sns&hl=en-US&ah=uHAni3GfAGZjRZa7H6-3_zMAfPw', appStoreUrl: 'https://apps.apple.com/jp/app/sushimemo/id1643309794',);
                 Navigator.push(context,MaterialPageRoute(
                     builder:(context) => Guestroulette()
                 ));

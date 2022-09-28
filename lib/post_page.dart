@@ -72,7 +72,7 @@ class _AddPostPageState extends State<AddPostPage>{
                     Navigator.of(context).pop();
                   },
                 ),
-              )
+              ),
             ],
           ),
         ),
