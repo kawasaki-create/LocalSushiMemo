@@ -123,8 +123,10 @@ class _scrapingState extends State<scraping> {
             menuPrice = driver.document.querySelectorAll('span > .price');
             replaceMenu = menuName[RandomMenu].toString()
                 .replaceAll('<span class="ttl">', '').replaceAll('</span>', '');
-            replacePrice = menuPrice[RandomMenu].toString()
+           /* replacePrice = menuPrice[RandomMenu].toString()
                 .replaceAll('<span class="price">', '').replaceAll('</span>', '');
+
+            */
           });
         break;
         case '2':

@@ -8,7 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:riverpod/riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class Profile extends StatefulWidget {
 
@@ -68,13 +68,13 @@ class _ProfileState extends State<Profile> {
   }
 
   ///ファイルDL
-  final imageStateProvider = StateProvider<Uint8List?>((ref) => null);
+ // final imageStateProvider = StateProvider<Uint8List?>((ref) => null);
   /// 画像のダウンロード
    Uint8List? data;
    String nullcheck = 'getUserが取得できてない';
 
   Future getUser() async{
-    await Future.delayed(Duration(seconds: waitSecond));
+   // await Future.delayed(Duration(seconds: waitSecond));
     //現在のユーザーを取得する
     final cUser = await FirebaseAuth.instance
         .currentUser;
@@ -94,11 +94,12 @@ class _ProfileState extends State<Profile> {
         });
 
     final storageRef = FirebaseStorage.instance.ref();
-    final imageRef = storageRef.child("users/$userIDs/image");
+    // imageUrl = await storageRef.child("users/$userIDs/image.jpg").getDownloadURL();
+    final imageRef = storageRef.child("users/$userIDs/image.jpg");
     try {
         nullcheck = 'GUは取れてる';
       const oneMegabyte = 10240 * 10240;
-        data = await imageRef.getData(oneMegabyte);
+       final Uint8List? data = await imageRef.getData(oneMegabyte);
       // Data for "images/island.jpg" is returned, use this as needed.
     } on FirebaseException catch (e) {
       // Handle any errors.
@@ -127,17 +128,11 @@ class _ProfileState extends State<Profile> {
               Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if(data != null)
                     ClipOval(
                       child:
-                      data! == null
-                          ? Image.network(
-                        'https://cdn-icons-png.flaticon.com/512/1946/1946429.png',
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.fill,
-                      )
-                          : Image.memory(
+                      data == null
+                        ? Text(nullcheck)
+                        : Image.memory(
                         data!,
                         width: 100,
                         height: 100,
